@@ -59,6 +59,7 @@ function Home() {
             ? setFavourites(favourites.filter(item => item !== id))
             : setFavourites(favourites => [...favourites, id])
         }
+        renderHoverEmoji={id => (favourites.includes(id) ? '💔' : '❤️')}
       />
       <button onClick={() => dispatch({ type: 'loadMore' })}>Load more</button>
     </div>
