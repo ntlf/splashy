@@ -4,6 +4,7 @@ import { useFavourites } from '../hooks/favourites';
 import { Button } from './common';
 import Gallery from './Gallery';
 import Search from './Search';
+import { Box } from './common';
 
 const initialState = {
   photos: [],
@@ -46,19 +47,28 @@ function Home() {
 
   return (
     <div>
-      <Search
-        onSubmit={value => {
-          if (value !== query) {
-            dispatch({ type: 'search', payload: value });
-          }
-        }}
-      />
+      <Box p={3}>
+        <Search
+          onSubmit={value => {
+            if (value !== query) {
+              dispatch({ type: 'search', payload: value });
+            }
+          }}
+        />
+      </Box>
       <Gallery
         photos={photos}
         onPhotoClick={id => (favourites.includes(id) ? remove(id) : add(id))}
         renderHoverEmoji={id => (favourites.includes(id) ? '💔' : '❤️')}
       />
-      <Button onClick={() => dispatch({ type: 'loadMore' })}>Load more</Button>
+      <Box p={3} textAlign="center">
+        <Button
+          width={['75%', '50%', '25%']}
+          onClick={() => dispatch({ type: 'loadMore' })}
+        >
+          Load more
+        </Button>
+      </Box>
     </div>
   );
 }
