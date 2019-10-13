@@ -26,6 +26,7 @@ const Layer = styled('span')`
   visibility: hidden;
   font-size: 64px;
   opacity: 0.7;
+  cursor: pointer;
 `;
 
 const Container = styled('div')`
@@ -42,7 +43,12 @@ function Gallery({ photos, onPhotoClick, renderHoverEmoji }) {
   return (
     <Grid>
       {photos.map(({ id, alt_description: alt, urls: { regular: url } }) => (
-        <Container key={id} onClick={() => onPhotoClick(id)}>
+        <Container
+          key={id}
+          onClick={() => onPhotoClick(id)}
+          tabIndex="0"
+          onKeyDown={e => e.key === 'Enter' && onPhotoClick(id)}
+        >
           <Image src={url} alt={alt} />
           <Layer>{renderHoverEmoji && renderHoverEmoji(id)}</Layer>
         </Container>
