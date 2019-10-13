@@ -1,12 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { UnsplashAPI } from '../api/index';
 import Gallery from './Gallery';
 import Search from './Search';
 
+const initialState = {
+  photos: [],
+  query: '',
+  page: 1
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'loadMore':
+      return { ...state, page: state.page + 1 };
+    case 'search':
+      return { ...state, page: 1, query: action.payload, photos: [] };
+    case 'loaded':
+      return { ...state, photos: [...state.photos, ...action.payload] };
+    default:
+      return state;
+  }
+}
+
 function Home() {
-  const [photos, setPhotos] = useState([]);
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
+  const [{ photos, query, page }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const fetch = async () => {
@@ -18,7 +35,7 @@ function Home() {
         data = await UnsplashAPI.getPhotos(page);
       }
 
-      setPhotos(photos => [...photos, ...data]);
+      dispatch({ type: 'loaded', payload: data });
     };
 
     fetch();
@@ -29,13 +46,12 @@ function Home() {
       <Search
         onSubmit={value => {
           if (value !== query) {
-            setPhotos([]);
-            setQuery(value);
+            dispatch({ type: 'search', payload: value });
           }
         }}
       />
       <Gallery photos={photos} />
-      <button onClick={() => setPage(page => page + 1)}>Load more</button>
+      <button onClick={() => dispatch({ type: 'loadMore' })}>Load more</button>
     </div>
   );
 }
