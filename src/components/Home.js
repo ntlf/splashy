@@ -6,27 +6,36 @@ import Search from './Search';
 function Home() {
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetch = async () => {
       let data;
 
       if (query) {
-        data = await UnsplashAPI.searchPhotos(1, query);
+        data = await UnsplashAPI.searchPhotos(page, query);
       } else {
-        data = await UnsplashAPI.getPhotos(1);
+        data = await UnsplashAPI.getPhotos(page);
       }
 
-      setPhotos(data);
+      setPhotos(photos => [...photos, ...data]);
     };
 
     fetch();
-  }, [query]);
+  }, [query, page]);
 
   return (
     <div>
-      <Search onSubmit={value => setQuery(value)} />
+      <Search
+        onSubmit={value => {
+          if (value !== query) {
+            setPhotos([]);
+            setQuery(value);
+          }
+        }}
+      />
       <Gallery photos={photos} />
+      <button onClick={() => setPage(page => page + 1)}>Load more</button>
     </div>
   );
 }
