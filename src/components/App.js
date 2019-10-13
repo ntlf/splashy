@@ -7,11 +7,10 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '../themes';
-import { Button, Box } from './common';
-import NavItem from './common/NavItem';
 import Favourites from './Favourites';
 import FavouritesProvder from './FavouritesProvider';
 import GlobalStyle from './GlobalStyle';
+import Header from './Header';
 import Home from './Home';
 import {
   default as AppThemeProvider,
@@ -29,22 +28,7 @@ function App() {
                 <GlobalStyle />
                 <Router>
                   <>
-                    <Box display="flex" alignItems="center" p={2}>
-                      <NavItem to="/" activeClassName="active" exact>
-                        Home
-                      </NavItem>
-                      <NavItem to="/favourites" activeClassName="active">
-                        Favourites
-                      </NavItem>
-                      <Box flex="1" />
-                      <Button
-                        onClick={() =>
-                          setTheme(theme === 'dark' ? 'light' : 'dark')
-                        }
-                      >
-                        {theme}
-                      </Button>
-                    </Box>
+                    <Header />
                     <Switch>
                       <Route path="/" exact>
                         <Home />
