@@ -1,8 +1,8 @@
 import React, { useEffect, useReducer } from 'react';
 import { UnsplashAPI } from '../api/index';
-import { useLocalStorage } from '../hooks/localStorage';
 import Gallery from './Gallery';
 import Search from './Search';
+import { useFavourites } from '../hooks/favourites';
 
 const initialState = {
   photos: [],
@@ -25,7 +25,7 @@ function reducer(state, action) {
 
 function Home() {
   const [{ photos, query, page }, dispatch] = useReducer(reducer, initialState);
-  const [favourites, setFavourites] = useLocalStorage('splashy-favourites', []);
+  const { favourites, add, remove } = useFavourites();
 
   useEffect(() => {
     const fetch = async () => {
@@ -54,11 +54,7 @@ function Home() {
       />
       <Gallery
         photos={photos}
-        onPhotoClick={id =>
-          favourites.includes(id)
-            ? setFavourites(favourites.filter(item => item !== id))
-            : setFavourites(favourites => [...favourites, id])
-        }
+        onPhotoClick={id => (favourites.includes(id) ? remove(id) : add(id))}
         renderHoverEmoji={id => (favourites.includes(id) ? '💔' : '❤️')}
       />
       <button onClick={() => dispatch({ type: 'loadMore' })}>Load more</button>
