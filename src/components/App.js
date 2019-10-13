@@ -5,12 +5,13 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { useTheme } from '../hooks/theme';
+import { darkTheme, lightTheme } from '../themes';
+import { Button } from './common';
 import Favourites from './Favourites';
 import GlobalStyle from './GlobalStyle';
 import Home from './Home';
-import { useTheme } from '../hooks/theme';
-import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from '../themes';
 
 function App() {
   const [theme, toggleTheme] = useTheme();
@@ -18,7 +19,7 @@ function App() {
   return (
     <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <>
-        <button onClick={() => toggleTheme()}>{theme}</button>
+        <Button onClick={() => toggleTheme()}>{theme}</Button>
         <GlobalStyle />
         <Router>
           <Switch>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Button, Input } from './common';
 
 const Form = styled('form')`
   text-align: center;
@@ -16,12 +17,12 @@ export default function Search({ onSubmit }) {
       }}
       data-testid="form"
     >
-      <input
+      <Input
         value={value}
         onChange={e => setValue(e.target.value)}
         data-testid="input"
       />
-      <button type="submit">Search</button>
+      <Button type="submit">Search</Button>
     </Form>
   );
 }

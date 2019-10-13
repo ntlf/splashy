@@ -1,8 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
 import { UnsplashAPI } from '../api';
+import { useFavourites } from '../hooks/favourites';
+import { Button } from './common';
 import Gallery from './Gallery';
 import Search from './Search';
-import { useFavourites } from '../hooks/favourites';
 
 const initialState = {
   photos: [],
@@ -57,7 +58,7 @@ function Home() {
         onPhotoClick={id => (favourites.includes(id) ? remove(id) : add(id))}
         renderHoverEmoji={id => (favourites.includes(id) ? '💔' : '❤️')}
       />
-      <button onClick={() => dispatch({ type: 'loadMore' })}>Load more</button>
+      <Button onClick={() => dispatch({ type: 'loadMore' })}>Load more</Button>
     </div>
   );
 }
