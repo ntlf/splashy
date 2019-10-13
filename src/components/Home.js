@@ -9,13 +9,19 @@ function Home() {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await UnsplashAPI.getPhotos(1);
+      let data;
+
+      if (query) {
+        data = await UnsplashAPI.searchPhotos(1, query);
+      } else {
+        data = await UnsplashAPI.getPhotos(1);
+      }
 
       setPhotos(data);
     };
 
     fetch();
-  }, []);
+  }, [query]);
 
   return (
     <div>
