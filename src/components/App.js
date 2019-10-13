@@ -8,12 +8,11 @@ import {
 import { ThemeProvider } from 'styled-components';
 import { useTheme } from '../hooks/theme';
 import { darkTheme, lightTheme } from '../themes';
-import { Button } from './common';
+import { Button, Box } from './common';
 import NavItem from './common/NavItem';
 import Favourites from './Favourites';
 import GlobalStyle from './GlobalStyle';
 import Home from './Home';
-import Box from './common/Box';
 
 function App() {
   const [theme, toggleTheme] = useTheme();
