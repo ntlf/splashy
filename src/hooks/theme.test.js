@@ -1,8 +1,11 @@
+import React from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { useTheme } from './theme';
+import ThemeProvider from '../components/ThemeProvider';
 
 it('toggles theme', () => {
-  const { result } = renderHook(() => useTheme());
+  const wrapper = ({ children }) => <ThemeProvider>{children}</ThemeProvider>;
+  const { result } = renderHook(() => useTheme(), { wrapper });
   const initialTheme = result.current[0];
 
   act(() => {

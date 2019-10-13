@@ -1,11 +1,17 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import React from 'react';
+import FavouritesProvider from '../components/FavouritesProvider';
 import { useFavourites } from './favourites';
 
 it('adds and removes items correctly', () => {
+  const wrapper = ({ children }) => (
+    <FavouritesProvider>{children}</FavouritesProvider>
+  );
+
   const testItem1 = 'id-1';
   const testItem2 = 'id-2';
   const testItem3 = 'id-3';
-  const { result } = renderHook(() => useFavourites());
+  const { result } = renderHook(() => useFavourites(), { wrapper });
 
   act(() => {
     result.current.add(testItem1);

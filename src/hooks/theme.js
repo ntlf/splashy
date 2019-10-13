@@ -1,23 +1,18 @@
-import { useLocalStorage } from './localStorage';
-import { useMemo } from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from '../components/ThemeProvider';
 
-const SPLASHY_THEME = 'splashy-theme';
+export function useTheme() {
+  const context = useContext(ThemeContext);
 
-export const useTheme = () => {
-  const initialTheme = useMemo(() => {
-    const localTheme = window.localStorage.getItem(SPLASHY_THEME);
-    const darkPreferred =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (!context) {
+    throw new Error(`This hook must be used within a ThemeProvider`);
+  }
 
-    return localTheme ? localTheme : darkPreferred ? 'dark' : 'light';
-  }, []);
-
-  const [theme, setTheme] = useLocalStorage(SPLASHY_THEME, initialTheme);
+  const [theme, setTheme] = context;
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return [theme, toggleTheme];
-};
+}
