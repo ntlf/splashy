@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { UnsplashAPI } from '../api/index';
+import { UnsplashAPI } from '../api';
 import Gallery from './Gallery';
 import Search from './Search';
 import { useFavourites } from '../hooks/favourites';

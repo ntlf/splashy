@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFavourites } from '../hooks/favourites';
-import { UnsplashAPI } from '../api/index';
+import { UnsplashAPI } from '../api';
 import Gallery from './Gallery';
 
 function Favourites() {
