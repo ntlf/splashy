@@ -14,11 +14,11 @@ const Grid = styled('div')`
   padding: 16px;
 `;
 
-function Gallery({ photos }) {
+function Gallery({ photos, onPhotoClick }) {
   return (
     <Grid>
       {photos.map(({ id, alt_description: alt, urls: { regular: url } }) => (
-        <Image key={id} src={url} alt={alt} />
+        <Image key={id} src={url} alt={alt} onClick={() => onPhotoClick(id)} />
       ))}
     </Grid>
   );

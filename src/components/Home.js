@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import { UnsplashAPI } from '../api/index';
+import { useLocalStorage } from '../hooks/localStorage';
 import Gallery from './Gallery';
 import Search from './Search';
 
@@ -24,6 +25,7 @@ function reducer(state, action) {
 
 function Home() {
   const [{ photos, query, page }, dispatch] = useReducer(reducer, initialState);
+  const [favourites, setFavourites] = useLocalStorage('splashy-favourites', []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -50,7 +52,14 @@ function Home() {
           }
         }}
       />
-      <Gallery photos={photos} />
+      <Gallery
+        photos={photos}
+        onPhotoClick={id =>
+          favourites.includes(id)
+            ? setFavourites(favourites.filter(item => item !== id))
+            : setFavourites(favourites => [...favourites, id])
+        }
+      />
       <button onClick={() => dispatch({ type: 'loadMore' })}>Load more</button>
     </div>
   );
