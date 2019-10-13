@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFavourites } from '../hooks/favourites';
 import { UnsplashAPI } from '../api';
 import Gallery from './Gallery';
+import { Box } from './common';
 
 function Favourites() {
   const { favourites, remove } = useFavourites();
@@ -21,7 +22,11 @@ function Favourites() {
 
   return (
     <div>
-      {!favourites.length && <div>Your favourites list is empty!</div>}
+      {!favourites.length && (
+        <Box fontSize={3} p={3} textAlign="center">
+          Your favourites list is empty!
+        </Box>
+      )}
       <Gallery
         photos={photos}
         onPhotoClick={id => remove(id)}
