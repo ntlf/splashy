@@ -14,8 +14,13 @@ export default function Search({ onSubmit }) {
         e.preventDefault();
         onSubmit(value);
       }}
+      data-testid="form"
     >
-      <input value={value} onChange={e => setValue(e.target.value)} />
+      <input
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        data-testid="input"
+      />
       <button type="submit">Search</button>
     </Form>
   );
