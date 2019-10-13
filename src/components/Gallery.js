@@ -32,7 +32,8 @@ const Layer = styled('span')`
 const Container = styled('div')`
   position: relative;
 
-  :hover {
+  :hover,
+  :focus {
     ${Layer} {
       visibility: visible;
     }
